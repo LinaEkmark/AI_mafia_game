@@ -4,56 +4,51 @@ using UnityEngine.SceneManagement;
 public class NPCInteraction : MonoBehaviour
 {
     [Header("Settings")]
-    // Type the unique name of this NPC in the Inspector (e.g., "Wizard", "Guard")
-    [SerializeField] private string npcName;
+    // field where you drag your Scene Asset
+    // The #if UNITY_EDITOR part means this variable only exists while you are making the game.
+#if UNITY_EDITOR
+    public Object sceneAsset;
+#endif
 
-    // The name of the scene to load (e.g., "DialogueScene")
-    [SerializeField] private string sceneToLoad = "DialogueScene";
+    [HideInInspector]
+    [SerializeField] private string sceneName;
 
-    [Header("Visual Cue (Optional)")]
-    // Drag a floating text object or icon here (like a "Press E" prompt)
-    [SerializeField] private GameObject interactPrompt;
+    private bool playerIsClose = false;
 
-    // --- DATA PASSING ---
-    // This static variable belongs to the CLASS, not the object. 
-    // It stays in memory even when the scene changes.
-    public static string VisitedNPCName;
-    // --------------------
-
-    private bool isPlayerClose = false;
-
-    private void Start()
+    private void OnValidate()
     {
-        // Hide the prompt at start
-        if (interactPrompt != null) interactPrompt.SetActive(false);
+#if UNITY_EDITOR
+        if (sceneAsset != null)
+        {
+            // Takes file and extracts the name
+            sceneName = sceneAsset.name;
+        }
+#endif
     }
 
-    private void Update()
+    // --- GAME LOGIC ---
+
+    void Update()
     {
-        // Only allow interaction if player is close AND presses E
-        if (isPlayerClose && Input.GetKeyDown(KeyCode.E))
+        if (playerIsClose && Input.GetKeyDown(KeyCode.E))
         {
-            EnterDialogue();
+            // Safety Check: Make sure a scene is actually assigned
+            if (string.IsNullOrEmpty(sceneName))
+            {
+                Debug.LogError("No scene assigned to this NPC!");
+                return;
+            }
+
+            Debug.Log("Loading scene: " + sceneName);
+            SceneManager.LoadScene(sceneName);
         }
     }
-
-    private void EnterDialogue()
-    {
-        // 1. Save the name of THIS specific NPC so the next scene can read it
-        VisitedNPCName = npcName;
-
-        // 2. Load the conversation scene
-        SceneManager.LoadScene(sceneToLoad);
-    }
-
-    // --- PHYSICS DETECTION ---
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerClose = true;
-            if (interactPrompt != null) interactPrompt.SetActive(true);
+            playerIsClose = true;
         }
     }
 
@@ -61,8 +56,7 @@ public class NPCInteraction : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerClose = false;
-            if (interactPrompt != null) interactPrompt.SetActive(false);
+            playerIsClose = false;
         }
     }
 }

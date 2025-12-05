@@ -6208,6 +6208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 619081436}
   - component: {fileID: 619081435}
+  - component: {fileID: 619081437}
   m_Layer: 0
   m_Name: Tom
   m_TagString: Untagged
@@ -6255,6 +6256,20 @@ Transform:
   - {fileID: 1970143116}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &619081437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619081434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beac69c645fadb24889f3314d16a1aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneAsset: {fileID: 102900000, guid: fa55cb80efbc7614d86df1f77bb328e3, type: 3}
+  sceneName: Tom_scene
 --- !u!1 &622228277
 GameObject:
   m_ObjectHideFlags: 0
@@ -6265,6 +6280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 622228279}
   - component: {fileID: 622228278}
+  - component: {fileID: 622228280}
   m_Layer: 0
   m_Name: Munch
   m_TagString: Untagged
@@ -6312,6 +6328,20 @@ Transform:
   - {fileID: 1677401943}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &622228280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622228277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beac69c645fadb24889f3314d16a1aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneAsset: {fileID: 102900000, guid: 4bdb3a7fc885b7e4785f5fc9045bed60, type: 3}
+  sceneName: Munch_scene
 --- !u!1001 &625638883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7446,6 +7476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 768562474}
   - component: {fileID: 768562473}
+  - component: {fileID: 768562475}
   m_Layer: 0
   m_Name: Sally
   m_TagString: Untagged
@@ -7493,6 +7524,20 @@ Transform:
   - {fileID: 391910948}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &768562475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768562472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beac69c645fadb24889f3314d16a1aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneAsset: {fileID: 102900000, guid: 9a222965574af284abaa918ea333849d, type: 3}
+  sceneName: Sally_scene
 --- !u!1001 &776869281
 PrefabInstance:
   m_ObjectHideFlags: 0
