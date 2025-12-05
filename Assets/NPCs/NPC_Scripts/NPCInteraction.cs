@@ -46,15 +46,17 @@ public class NPCInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        // "attachedRigidbody" automatically finds the Parent object that has the physics
+        if (other.attachedRigidbody != null && other.attachedRigidbody.CompareTag("Player"))
         {
+            Debug.Log("Interact with " + sceneName);
             playerIsClose = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.attachedRigidbody != null && other.attachedRigidbody.CompareTag("Player"))
         {
             playerIsClose = false;
         }
