@@ -7,6 +7,9 @@ namespace KinematicCharacterController.Examples
 {
     public class ExampleCharacterCamera : MonoBehaviour
     {
+        [Header("PLayer Mode")]
+        public bool OverTheShoulder = false; // To disable mouse rotation
+
         [Header("Framing")]
         public Camera Camera;
         public Vector2 FollowPointFraming = new Vector2(0f, 0f);
@@ -85,28 +88,61 @@ namespace KinematicCharacterController.Examples
         {
             if (FollowTransform)
             {
-                if (InvertX)
+                Quaternion targetRotation;
+                if (OverTheShoulder)
                 {
-                    rotationInput.x *= -1f;
+                    // Rotate camera to always face the same direction as the character
+                    targetRotation = Quaternion.LookRotation(
+                        FollowTransform.forward,   // look forward with the player
+                        FollowTransform.up
+                    );
+
+                    // rotation
+                    /*
+                    Transform.rotation = Quaternion.Slerp(
+                        Transform.rotation,
+                        targetRotation,
+                        1f - Mathf.Exp(-RotationSharpness * deltaTime)
+                    );
+                    */
+
+                    RotationSharpness = 10f;
+
+                    Transform.rotation = Quaternion.Slerp(
+                        Transform.rotation,
+                        targetRotation,
+                        deltaTime * RotationSharpness
+                    );
+
+
                 }
-                if (InvertY)
+                else
                 {
-                    rotationInput.y *= -1f;
+
+                    // Handle inversion
+                    if (InvertX)
+                    {
+                        rotationInput.x *= -1f;
+                    }
+                    if (InvertY)
+                    {
+                        rotationInput.y *= -1f;
+                    }
+
+                    // Process rotation input
+                    Quaternion rotationFromInput = Quaternion.Euler(FollowTransform.up * (rotationInput.x * RotationSpeed));
+                    PlanarDirection = rotationFromInput * PlanarDirection;
+                    PlanarDirection = Vector3.Cross(FollowTransform.up, Vector3.Cross(PlanarDirection, FollowTransform.up));
+                    Quaternion planarRot = Quaternion.LookRotation(PlanarDirection, FollowTransform.up);
+
+                    _targetVerticalAngle -= (rotationInput.y * RotationSpeed);
+                    _targetVerticalAngle = Mathf.Clamp(_targetVerticalAngle, MinVerticalAngle, MaxVerticalAngle);
+                    Quaternion verticalRot = Quaternion.Euler(_targetVerticalAngle, 0, 0);
+                    targetRotation = Quaternion.Slerp(Transform.rotation, planarRot * verticalRot, 1f - Mathf.Exp(-RotationSharpness * deltaTime));
+
+                    // Apply rotation
+                    Transform.rotation = targetRotation;
                 }
-
-                // Process rotation input
-                Quaternion rotationFromInput = Quaternion.Euler(FollowTransform.up * (rotationInput.x * RotationSpeed));
-                PlanarDirection = rotationFromInput * PlanarDirection;
-                PlanarDirection = Vector3.Cross(FollowTransform.up, Vector3.Cross(PlanarDirection, FollowTransform.up));
-                Quaternion planarRot = Quaternion.LookRotation(PlanarDirection, FollowTransform.up);
-
-                _targetVerticalAngle -= (rotationInput.y * RotationSpeed);
-                _targetVerticalAngle = Mathf.Clamp(_targetVerticalAngle, MinVerticalAngle, MaxVerticalAngle);
-                Quaternion verticalRot = Quaternion.Euler(_targetVerticalAngle, 0, 0);
-                Quaternion targetRotation = Quaternion.Slerp(Transform.rotation, planarRot * verticalRot, 1f - Mathf.Exp(-RotationSharpness * deltaTime));
-
-                // Apply rotation
-                Transform.rotation = targetRotation;
 
                 // Process distance input
                 if (_distanceIsObstructed && Mathf.Abs(zoomInput) > 0f)
