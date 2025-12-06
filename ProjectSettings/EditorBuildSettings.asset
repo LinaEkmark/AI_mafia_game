@@ -8,6 +8,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/VNB - Office Set/Scenes/Demo 2 - Office Set 1.unity
+    guid: 578728e0dd306bc42b9882fa04dd56df
+  - enabled: 1
+    path: Assets/NPCs/NPC_Scenes/Munch_scene.unity
+    guid: 4bdb3a7fc885b7e4785f5fc9045bed60
+  - enabled: 1
+    path: Assets/NPCs/NPC_Scenes/Sally_scene.unity
+    guid: 9a222965574af284abaa918ea333849d
+  - enabled: 1
+    path: Assets/NPCs/NPC_Scenes/Tom_scene.unity
+    guid: fa55cb80efbc7614d86df1f77bb328e3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
