@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class NPCInteraction : MonoBehaviour
 {
     [Header("Settings")]
@@ -46,6 +47,11 @@ public class NPCInteraction : MonoBehaviour
             }
 
             Debug.Log("Loading scene: " + sceneName);
+            NPCCursorManager cursorManager = FindFirstObjectByType< NPCCursorManager>();
+            if (cursorManager != null)
+            {
+                cursorManager.EnableUICursor();
+            }
             SceneManager.LoadScene(sceneName);
         }
     }
