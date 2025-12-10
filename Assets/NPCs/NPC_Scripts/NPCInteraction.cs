@@ -39,6 +39,12 @@ public class NPCInteraction : MonoBehaviour
                 return;
             }
 
+            // Hide the prompt before loading the scene
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.HideInteractionPrompt();
+            }
+
             Debug.Log("Loading scene: " + sceneName);
             SceneManager.LoadScene(sceneName);
         }
@@ -49,8 +55,16 @@ public class NPCInteraction : MonoBehaviour
         // "attachedRigidbody" automatically finds the Parent object that has the physics
         if (other.attachedRigidbody != null && other.attachedRigidbody.CompareTag("Player"))
         {
-            Debug.Log("Interact with " + sceneName);
             playerIsClose = true;
+
+            // Show the interaction prompt
+            if (UIManager.Instance != null)
+            {
+                // We use the GameObject's name for NPC "X"
+                UIManager.Instance.ShowInteractionPrompt($"Press E to talk to {gameObject.name}");
+            }
+
+            Debug.Log("Player can now interact with " + gameObject.name);
         }
     }
 
@@ -59,6 +73,12 @@ public class NPCInteraction : MonoBehaviour
         if (other.attachedRigidbody != null && other.attachedRigidbody.CompareTag("Player"))
         {
             playerIsClose = false;
+
+            // Hide the interaction prompt
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.HideInteractionPrompt();
+            }
         }
     }
 }
