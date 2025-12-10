@@ -5,19 +5,24 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class OpenAINPCController : MonoBehaviour
+public class NPCOpenAIController : MonoBehaviour
 {
     public GameObject chatPanel;
     public TMP_Text dialogueText;
     public TMP_InputField inputField;
     public Button sendButton;
-    public string currentOfficer;
+
+    public string NPCname;
 
     private OpenAIAPI api;
+    private List<ChatMessage> chat;
+    private StoryManager storyManager;
 
-    private Dictionary<string, List<ChatMessage>> officerChats;
+    public int maxExchanges = 5;
+    private int RemainingExchanges;
 
     private string systemPrompt =
     "You are the NPC dialogue system for a comedy detective game. " +
@@ -26,49 +31,39 @@ public class OpenAINPCController : MonoBehaviour
     "Keep answers short, funny, and true to personality. " +
     "The conversation should not last more than 5 exchanges per officer. " +
     "Nobody should admit they are guilty. The player should try to deduce that from the conversations" +
-    "if the conversation diverges too much, gently steer it back on track or end the conversation in character. " +
-
-    "\n\n--- Officer Profiles ---\n" +
-    "Jim; anxious, contradicts himself, loves doughnuts.\n" +
-    "Sally; health-obsessed, hates sweets, judges everyone's diet.\n" +
-    "Mike; gluttonous, friendly, suspicious but honest.\n" +
-    "Linda; strict, rule-focused, observes everything.\n" +
-    "Tom; sarcastic, lazy, hides info behind jokes.\n" +
-    "Carol; sweet, nervous, stress-eats, could be the culprit.\n";
+    "if the conversation diverges too much, gently steer it back on track or end the conversation in character. ";
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        chatPanel.SetActive(false);
+        chatPanel.SetActive(true);
         api = new OpenAIAPI(Environment.GetEnvironmentVariable("OPENAI_API_KEY", EnvironmentVariableTarget.User));
-        officerChats = new Dictionary<string, List<ChatMessage>>();
-        SetCurrentOfficer();
+     
+        storyManager = FindFirstObjectByType<StoryManager>();
+        RemainingExchanges = maxExchanges;
+
+        NPCname = SceneManager.GetActiveScene().name.Replace("_scene", "");
+        initializeConversation();
         sendButton.onClick.AddListener(() => GetResponse());
     }
 
-    void initializeConversation(string officerName)
+
+
+    void initializeConversation()
     {
-        var messages = new List<ChatMessage>()
+        string NPCprompt =  storyManager.GetPhasePrompt(NPCname);
+
+        Debug.Log($"Initializing conversation with Officer {NPCname}:\n{systemPrompt + NPCprompt}");
+        dialogueText.text = $"You are now questioning Officer {this.NPCname}.\n\nAsk your questions.";
+
+        chat = new List<ChatMessage>()
         {
             new ChatMessage(
                 ChatMessageRole.System,
-                systemPrompt + $"Respond ONLY as Officer {officerName}.Stick to their personality.")
+                systemPrompt + NPCprompt)
         };
-        officerChats[currentOfficer] = messages;
-    }
-
-    private void SetCurrentOfficer()
-    {
-
-        chatPanel.SetActive(true);
-
-        dialogueText.text = $"You are now questioning Officer {currentOfficer}.\n\nAsk your questions.";
-
-        if (!officerChats.ContainsKey(currentOfficer))
-        {
-            initializeConversation(currentOfficer);
-        }
+        
     }
 
     private async void GetResponse()
@@ -78,17 +73,26 @@ public class OpenAINPCController : MonoBehaviour
 
         sendButton.interactable = false;
 
-        var chat = officerChats[currentOfficer];
+        if (RemainingExchanges == 0)
+        {
+            inputField.interactable = false;
+            sendButton.interactable = false;
+            dialogueText.text += $"\n{NPCname}: I've answered enough. Leave me alone!";
+            RemainingExchanges = maxExchanges;
+            return;
+        }
 
         // Add player's message
         ChatMessage userMessage = new ChatMessage(
             ChatMessageRole.User,
-            $"Officer {currentOfficer}, the player asks: \"{inputField.text}\""
+            $"Officer {NPCname}, the player asks: \"{inputField.text}\""
         );
         chat.Add(userMessage);
 
+        storyManager.EvaluatePlayerMessage(inputField.text);
+
         // Update UI
-        dialogueText.text = $"YOU: {inputField.text}\n\nOfficer {currentOfficer}: ...";
+        dialogueText.text = $"YOU: {inputField.text}\n\nOfficer {NPCname}: ...";
 
         string playerQuestion = inputField.text;
         inputField.text = "";
@@ -102,13 +106,15 @@ public class OpenAINPCController : MonoBehaviour
             Messages = chat
         });
 
-        string npcReply = response.Choices[0].Message.Content;
+        string NPCReply = response.Choices[0].Message.Content;
 
         // Add NPC reply to chat
-        chat.Add(new ChatMessage(ChatMessageRole.Assistant, npcReply));
+        chat.Add(new ChatMessage(ChatMessageRole.Assistant, NPCReply));
 
         // Update UI with final answer
-        dialogueText.text = $"YOU: {playerQuestion}\n\n{currentOfficer}: {npcReply}";
+        dialogueText.text = $"YOU: {playerQuestion}\n\n{NPCname}: {NPCReply}";
+
+        RemainingExchanges--;
 
         sendButton.interactable = true;
     }
