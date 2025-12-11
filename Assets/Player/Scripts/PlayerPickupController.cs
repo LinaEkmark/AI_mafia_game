@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -41,6 +40,7 @@ public class PlayerPickupController : MonoBehaviour
         if ((interactAction == null || interactAction.action == null))
         {
             bool pressed = false;
+
             // Try new Input System's keyboard if available
             if (Keyboard.current != null)
             {
@@ -69,49 +69,32 @@ public class PlayerPickupController : MonoBehaviour
         if (holder.HasItem)
         {
             holder.Drop();
-            UIManager.Instance?.HideInteractionPrompt();
+            // Let InteractionManager handle prompt clearing / updating
+            InteractionManager.Instance?.ClearPrompt(InteractionType.Pickup);
             return;
         }
 
         // find nearest Pickupable
-        Collider[] cols = Physics.OverlapSphere(detectionOrigin.position, detectionRadius, detectionMask);
-        Pickupable nearest = null;
-        float best = float.MaxValue;
-        foreach (var c in cols)
-        {
-            var p = c.GetComponentInParent<Pickupable>();
-            if (p == null) continue;
-
-            float d = Vector3.Distance(detectionOrigin.position, p.transform.position);
-            if (d < best)
-            {
-                best = d;
-                nearest = p;
-            }
-        }
+        Pickupable nearest = FindNearestPickup();
 
         if (nearest != null)
         {
             holder.PickUp(nearest);
-            UIManager.Instance?.HideInteractionPrompt();
+            InteractionManager.Instance?.ClearPrompt(InteractionType.Pickup);
         }
     }
 
-    void UpdateInteractionPrompt()
+    Pickupable FindNearestPickup()
     {
-        if (holder.HasItem)
-        {
-            UIManager.Instance?.ShowInteractionPrompt("Press E / Interact to drop");
-            return;
-        }
-
         Collider[] cols = Physics.OverlapSphere(detectionOrigin.position, detectionRadius, detectionMask);
         Pickupable nearest = null;
         float best = float.MaxValue;
+
         foreach (var c in cols)
         {
             var p = c.GetComponentInParent<Pickupable>();
             if (p == null) continue;
+
             float d = Vector3.Distance(detectionOrigin.position, p.transform.position);
             if (d < best)
             {
@@ -120,15 +103,40 @@ public class PlayerPickupController : MonoBehaviour
             }
         }
 
+        return nearest;
+    }
+
+    void UpdateInteractionPrompt()
+    {
+        // If we’re holding an item, request a pickup-level prompt
+        if (holder.HasItem)
+        {
+            InteractionManager.Instance?.RequestPrompt(
+                "Press E / Interact to drop",
+                InteractionType.Pickup
+            );
+            return;
+        }
+
+        // Not holding: check if there is something to pick up
+        Pickupable nearest = FindNearestPickup();
+
         if (nearest != null)
         {
-            UIManager.Instance?.ShowInteractionPrompt("Press E / Interact to pick up");
+            InteractionManager.Instance?.RequestPrompt(
+                "Press E / Interact to pick up",
+                InteractionType.Pickup
+            );
         }
         else
         {
-            UIManager.Instance?.HideInteractionPrompt();
+            // Now safe to clear our own prompt:
+            // This will only clear if the current priority == Pickup.
+            // If an NPC (higher priority) owns it, this does nothing.
+            InteractionManager.Instance?.ClearPrompt(InteractionType.Pickup);
         }
     }
+
 
     void OnDrawGizmosSelected()
     {

@@ -33,21 +33,17 @@ public class NPCInteraction : MonoBehaviour
     {
         if (playerIsClose && Input.GetKeyDown(KeyCode.E))
         {
-            // Safety Check: Make sure a scene is actually assigned
             if (string.IsNullOrEmpty(sceneName))
             {
                 Debug.LogError("No scene assigned to this NPC!");
                 return;
             }
 
-            // Hide the prompt before loading the scene
-            if (UIManager.Instance != null)
-            {
-                UIManager.Instance.HideInteractionPrompt();
-            }
+            // Let InteractionManager clear the current NPC prompt
+            InteractionManager.Instance?.ClearPrompt(InteractionType.NPC);
 
             Debug.Log("Loading scene: " + sceneName);
-            NPCCursorManager cursorManager = FindFirstObjectByType< NPCCursorManager>();
+            NPCCursorManager cursorManager = FindFirstObjectByType<NPCCursorManager>();
             if (cursorManager != null)
             {
                 cursorManager.EnableUICursor();
@@ -58,17 +54,14 @@ public class NPCInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // "attachedRigidbody" automatically finds the Parent object that has the physics
         if (other.attachedRigidbody != null && other.attachedRigidbody.CompareTag("Player"))
         {
             playerIsClose = true;
 
-            // Show the interaction prompt
-            if (UIManager.Instance != null)
-            {
-                // We use the GameObject's name for NPC "X"
-                UIManager.Instance.ShowInteractionPrompt($"Press E to talk to {gameObject.name}");
-            }
+            InteractionManager.Instance?.RequestPrompt(
+                $"Press E to talk to {gameObject.name}",
+                InteractionType.NPC
+            );
 
             Debug.Log("Player can now interact with " + gameObject.name);
         }
@@ -80,11 +73,7 @@ public class NPCInteraction : MonoBehaviour
         {
             playerIsClose = false;
 
-            // Hide the interaction prompt
-            if (UIManager.Instance != null)
-            {
-                UIManager.Instance.HideInteractionPrompt();
-            }
+            InteractionManager.Instance?.ClearPrompt(InteractionType.NPC);
         }
     }
 }
