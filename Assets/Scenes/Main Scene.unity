@@ -11473,8 +11473,6 @@ MonoBehaviour:
   openAngle: 90
   openSpeed: 2
   interactKey: 101
-  closedPrompt: Press E to open door
-  openPrompt: Press E to close door
 --- !u!1001 &1019154795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16306,8 +16304,6 @@ MonoBehaviour:
   openAngle: 90
   openSpeed: 2
   interactKey: 101
-  closedPrompt: Press E to open door
-  openPrompt: Press E to close door
 --- !u!1 &1458601895
 GameObject:
   m_ObjectHideFlags: 0
@@ -21946,8 +21942,6 @@ MonoBehaviour:
   openAngle: 90
   openSpeed: 2
   interactKey: 101
-  closedPrompt: Press E to open door
-  openPrompt: Press E to close door
 --- !u!1 &1988562570
 GameObject:
   m_ObjectHideFlags: 0
