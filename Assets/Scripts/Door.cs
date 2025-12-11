@@ -13,6 +13,8 @@ public class Door : MonoBehaviour
 
     [Header("Interaction")]
     public KeyCode interactKey = KeyCode.E;
+    public string closedPrompt = "Press E to open door";
+    public string openPrompt   = "Press E to close door";
 
     bool isOpen = false;
     bool isMoving = false;
@@ -48,6 +50,13 @@ public class Door : MonoBehaviour
                 StartCoroutine(RotateDoor(closedRot, openRot));   // open
 
             isOpen = !isOpen;
+
+            // Update the prompt while still in range
+            if (playerInRange)
+            {
+                string prompt = isOpen ? openPrompt : closedPrompt;
+                InteractionManager.Instance?.RequestPrompt(prompt, InteractionType.Door);
+            }
         }
     }
 
@@ -69,17 +78,23 @@ public class Door : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.attachedRigidbody != null && other.attachedRigidbody.CompareTag("Player"))
         {
             playerInRange = true;
+
+            string prompt = isOpen ? openPrompt : closedPrompt;
+            InteractionManager.Instance?.RequestPrompt(prompt, InteractionType.Door);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.attachedRigidbody != null && other.attachedRigidbody.CompareTag("Player"))
         {
             playerInRange = false;
+
+            // Only clears if Door currently owns the prompt
+            InteractionManager.Instance?.ClearPrompt(InteractionType.Door);
         }
     }
 }
