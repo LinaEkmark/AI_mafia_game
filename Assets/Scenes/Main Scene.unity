@@ -2597,6 +2597,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_standard_door_frame (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5831471802410937232, guid: 2e6de12b1fa53d14b90835d4b6d3e78a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5648,6 +5652,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 881695680}
     m_Modifications:
+    - target: {fileID: 2067939461761299897, guid: e417b1ac7ffd3b44a854dace85f01b95, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4861987032952021007, guid: e417b1ac7ffd3b44a854dace85f01b95, type: 3}
       propertyPath: m_RootOrder
       value: 67
