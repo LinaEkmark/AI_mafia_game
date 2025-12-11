@@ -59,7 +59,7 @@ public class NPCInteraction : MonoBehaviour
             playerIsClose = true;
 
             InteractionManager.Instance?.RequestPrompt(
-                $"Press E to talk to {gameObject.name}",
+                $"Talk to {gameObject.name}",
                 InteractionType.NPC
             );
 

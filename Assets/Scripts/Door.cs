@@ -13,8 +13,7 @@ public class Door : MonoBehaviour
 
     [Header("Interaction")]
     public KeyCode interactKey = KeyCode.E;
-    public string closedPrompt = "Press E to open door";
-    public string openPrompt   = "Press E to close door";
+
 
     bool isOpen = false;
     bool isMoving = false;
@@ -54,7 +53,7 @@ public class Door : MonoBehaviour
             // Update the prompt while still in range
             if (playerInRange)
             {
-                string prompt = isOpen ? openPrompt : closedPrompt;
+                string prompt = isOpen ? "Close" : "Open";
                 InteractionManager.Instance?.RequestPrompt(prompt, InteractionType.Door);
             }
         }
@@ -82,7 +81,7 @@ public class Door : MonoBehaviour
         {
             playerInRange = true;
 
-            string prompt = isOpen ? openPrompt : closedPrompt;
+            string prompt = isOpen ? "Close" : "Open";
             InteractionManager.Instance?.RequestPrompt(prompt, InteractionType.Door);
         }
     }
