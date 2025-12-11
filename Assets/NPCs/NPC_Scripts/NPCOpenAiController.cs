@@ -7,13 +7,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class NPCOpenAIController : MonoBehaviour
 {
     public GameObject chatPanel;
-    public TMP_Text dialogueText;
+    //public TMP_Text dialogueText;
     public TMP_InputField inputField;
     public Button sendButton;
+
+    public Transform contentPanel;
+    public GameObject ChatEntryPrefab;
+    public ScrollRect scrollRect;
 
     public string NPCname;
 
@@ -55,7 +60,7 @@ public class NPCOpenAIController : MonoBehaviour
         string NPCprompt =  storyManager.GetPhasePrompt(NPCname);
 
         Debug.Log($"Initializing conversation with Officer {NPCname}:\n{systemPrompt + NPCprompt}");
-        dialogueText.text = $"You are now questioning Officer {this.NPCname}.\n\nAsk your questions.";
+        //dialogueText.text = $"You are now questioning Officer {this.NPCname}.";
 
         chat = new List<ChatMessage>()
         {
@@ -66,6 +71,20 @@ public class NPCOpenAIController : MonoBehaviour
         
     }
 
+    void AddMessageToChat(string text)
+    {
+        GameObject entry = Instantiate(ChatEntryPrefab, contentPanel);
+
+        var tmp = entry.GetComponentInChildren<TextMeshProUGUI>();
+        tmp.text = text;
+
+        // Keep chat anchored at bottom
+        LayoutRebuilder.ForceRebuildLayoutImmediate(contentPanel.GetComponent<RectTransform>());
+
+        Canvas.ForceUpdateCanvases();
+        scrollRect.verticalNormalizedPosition = 0f;
+    }
+
     private async void GetResponse()
     {
         if (string.IsNullOrWhiteSpace(inputField.text))
@@ -73,11 +92,15 @@ public class NPCOpenAIController : MonoBehaviour
 
         sendButton.interactable = false;
 
+        // Update UI with player's question
+        AddMessageToChat($"[YOU]: {inputField.text}");
+
+        // Check if max exchanges reached
         if (RemainingExchanges == 0)
         {
             inputField.interactable = false;
             sendButton.interactable = false;
-            dialogueText.text += $"\n{NPCname}: I've answered enough. Leave me alone!";
+            AddMessageToChat($"[{NPCname}]: I've answered enough. Leave me alone!");
             RemainingExchanges = maxExchanges;
             return;
         }
@@ -87,12 +110,10 @@ public class NPCOpenAIController : MonoBehaviour
             ChatMessageRole.User,
             $"Officer {NPCname}, the player asks: \"{inputField.text}\""
         );
+
         chat.Add(userMessage);
 
         storyManager.EvaluatePlayerMessage(inputField.text);
-
-        // Update UI
-        dialogueText.text = $"YOU: {inputField.text}\n\nOfficer {NPCname}: ...";
 
         string playerQuestion = inputField.text;
         inputField.text = "";
@@ -112,7 +133,7 @@ public class NPCOpenAIController : MonoBehaviour
         chat.Add(new ChatMessage(ChatMessageRole.Assistant, NPCReply));
 
         // Update UI with final answer
-        dialogueText.text = $"YOU: {playerQuestion}\n\n{NPCname}: {NPCReply}";
+        AddMessageToChat($"[{NPCname}]: {NPCReply}");
 
         RemainingExchanges--;
 
