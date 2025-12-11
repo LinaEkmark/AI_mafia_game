@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/NPCs/NPC_Scenes/Tom_scene.unity
     guid: fa55cb80efbc7614d86df1f77bb328e3
+  - enabled: 1
+    path: Assets/Scenes/Party room.unity
+    guid: 5ee44c953205e814c86bb65d968a10ca
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
