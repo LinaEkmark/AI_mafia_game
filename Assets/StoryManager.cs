@@ -32,7 +32,7 @@ public class StoryManager : MonoBehaviour
         },
         {
             StoryPhase.Phase3,
-            new string[] {  }
+            new string[] { "interrogation room" }
         },
         {
             StoryPhase.Phase4,

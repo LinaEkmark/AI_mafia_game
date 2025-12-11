@@ -31,7 +31,8 @@ namespace NPC
                 {
                     "Give generic tips, don't let the player advance in the story.", // Phase 1
                     "If keyword 'RED HAIR' is mentioned, suspect Munch and hint Tom is 'dating a lamp'.", // Phase 2
-                    "Absent, cannot be questioned." // Phase 3
+                    "Deflect any questions to Tom or Munch. Ask about Munche's diet and Tom's dating life.", // Phase 3
+                    "Absent, cannot be questioned." // Phase 4
                 }
             };
 
@@ -44,7 +45,8 @@ namespace NPC
                 {
                     "Suggest checking the trash, but give no new info.", // Phase 1
                     "If keyword 'breakfast cupcakes' is mentioned, deny involvement, hint that Tom is suspicious and dating someone involving a lamp.", // Phase 2
-                    "Absent, cannot be questioned." // Phase 3
+                    "Get annoyed, try to push the fault onto Tom without accusing him outright.", // Phase 3
+                    "Absent, cannot be questioned." // Phase 4
                 }
             };
 
@@ -57,7 +59,8 @@ namespace NPC
                 {
                     "Refuse all questions.", // Phase 1
                     "Only respond if both keywords 'DATING' and 'LAMP' are mentioned; this unlocks the interrogation room.", // Phase 2
-                    "Absent, adds to eerie atmosphere." // Phase 3
+                    "Suggest going to take a look in the interrogation room and that you will open it for the player.", // Phase 3
+                    "Absent, cannot be questioned." // Phase 4
                 }
             };
         }
