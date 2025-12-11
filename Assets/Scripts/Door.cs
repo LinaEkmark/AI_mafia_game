@@ -13,8 +13,8 @@ public class Door : MonoBehaviour
 
     [Header("Interaction")]
     public KeyCode interactKey = KeyCode.E;
-    public string closedPrompt = "Press E to open door";
-    public string openPrompt   = "Press E to close door";
+    public string closedPrompt = "Open door";
+    public string openPrompt   = "Close door";
 
     bool isOpen = false;
     bool isMoving = false;

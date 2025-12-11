@@ -112,7 +112,7 @@ public class PlayerPickupController : MonoBehaviour
         if (holder.HasItem)
         {
             InteractionManager.Instance?.RequestPrompt(
-                "Press E / Interact to drop",
+                "Drop ",
                 InteractionType.Pickup
             );
             return;
@@ -124,7 +124,7 @@ public class PlayerPickupController : MonoBehaviour
         if (nearest != null)
         {
             InteractionManager.Instance?.RequestPrompt(
-                "Press E / Interact to pick up",
+                "Pick up ",
                 InteractionType.Pickup
             );
         }
