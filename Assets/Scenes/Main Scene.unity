@@ -12435,6 +12435,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   motor: {fileID: 0}
+  audioSource: {fileID: 0}
+  footstepSounds: []
 --- !u!95 &1088880844
 Animator:
   serializedVersion: 7
@@ -14629,7 +14631,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.3
+  m_Radius: 0.5
   m_Center: {x: 0, y: -0.00000023841858, z: 0}
 --- !u!1001 &1323090908
 PrefabInstance:

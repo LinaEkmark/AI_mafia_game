@@ -7,8 +7,8 @@ public class DonutPlate : MonoBehaviour
 
     void Start()
     {
-        //if (panel != null)
-          //  panel.SetActive(false); // ensure panel is hidden at start
+        if (panel != null)
+            panel.SetActive(false); // ensure panel is hidden at start
     }
 
     private void OnTriggerEnter(Collider other)
