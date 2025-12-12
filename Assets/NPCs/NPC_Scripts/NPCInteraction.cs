@@ -48,7 +48,8 @@ public class NPCInteraction : MonoBehaviour
             {
                 cursorManager.EnableUICursor();
             }
-            SceneManager.LoadScene(sceneName);
+            // Load dialogue scene additively so the current world stays loaded
+            OverlaySceneManager.OpenOverlay(sceneName);
         }
     }
 
