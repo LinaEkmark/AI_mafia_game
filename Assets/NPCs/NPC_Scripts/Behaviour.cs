@@ -59,7 +59,8 @@ namespace NPC
                 {
                     "Refuse all questions.", // Phase 1
                     "Only respond if both keywords 'DATING' and 'LAMP' are mentioned; this unlocks the interrogation room.", // Phase 2
-                    "Suggest going to take a look in the interrogation room and that you will open it for the player.", // Phase 3
+                    "Suggest going to take a look in the interrogation room and that you will open it for the player. " +
+                        "If asked about your girlfriend, you try to avoid the subject but admit she is AI.", // Phase 3
                     "Absent, cannot be questioned." // Phase 4
                 }
             };

@@ -14,7 +14,7 @@ public class Door : MonoBehaviour
     [Header("Interaction")]
     public KeyCode interactKey = KeyCode.E;
 
-
+    public bool isLocked = false;
     bool isOpen = false;
     bool isMoving = false;
     bool playerInRange = false;
@@ -38,6 +38,8 @@ public class Door : MonoBehaviour
 
     void Update()
     {
+        if (isLocked) return;
+
         // Only interact when player is inside trigger and door isn't moving
         if (!playerInRange || isMoving) return;
 
@@ -75,11 +77,24 @@ public class Door : MonoBehaviour
         isMoving = false;
     }
 
+    public void UnlockDoor()
+    {
+        Debug.Log("Door unlocked!");
+        isLocked = false;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.attachedRigidbody != null && other.attachedRigidbody.CompareTag("Player"))
         {
             playerInRange = true;
+
+            if (isLocked)
+            {
+                UIManager.Instance.HideKey();
+                InteractionManager.Instance?.RequestPrompt("Locked", InteractionType.Door);
+                return;
+            }
 
             string prompt = isOpen ? "Close" : "Open";
             InteractionManager.Instance?.RequestPrompt(prompt, InteractionType.Door);
@@ -92,6 +107,10 @@ public class Door : MonoBehaviour
         {
             playerInRange = false;
 
+            if (isLocked)
+            {
+                UIManager.Instance.ShowKey();
+            }
             // Only clears if Door currently owns the prompt
             InteractionManager.Instance?.ClearPrompt(InteractionType.Door);
         }

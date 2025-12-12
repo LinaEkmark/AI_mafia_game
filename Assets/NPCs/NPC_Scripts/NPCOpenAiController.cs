@@ -132,6 +132,8 @@ public class NPCOpenAIController : MonoBehaviour
         // Add NPC reply to chat
         chat.Add(new ChatMessage(ChatMessageRole.Assistant, NPCReply));
 
+        storyManager.EvaluatePlayerMessage(NPCReply);
+
         // Update UI with final answer
         AddMessageToChat($"[{NPCname}]: {NPCReply}");
 

@@ -28,6 +28,22 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ShowKey()
+    {
+        if (keyImage != null)
+        {
+            keyImage.enabled = true;
+        }
+    }
+
+    public void HideKey()
+    {
+        if (keyImage != null)
+        {
+            keyImage.enabled = false;
+        }
+    }
+
     public void ShowInteractionPrompt(string actionText)
     {
         if (interactionPanel == null || interactionPromptText == null)

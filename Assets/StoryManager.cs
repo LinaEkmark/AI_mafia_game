@@ -16,10 +16,12 @@ public class StoryManager : MonoBehaviour
     public static StoryManager Instance;
 
     public StoryPhase CurrentPhase = StoryPhase.Phase1;
+    public Door door;
+
     private NPC.Manager NPCManager;
     private HashSet<string> collectedKeywords;
 
-    // 🔍 Keyword dictionary used for detecting current phase
+    // Keyword dictionary used for detecting current phase
     private Dictionary<StoryPhase, string[]> phaseKeywords = new Dictionary<StoryPhase, string[]>
     {
         {
@@ -61,6 +63,9 @@ public class StoryManager : MonoBehaviour
     // 🚀 Call this after every player question
     public void EvaluatePlayerMessage(string userMessage)
     {
+        if (CurrentPhase == StoryPhase.Phase4)
+            return; // Final phase reached
+
         string lower = userMessage.ToLower();
         string[] currentKeywords = phaseKeywords[CurrentPhase];
 
@@ -81,13 +86,19 @@ public class StoryManager : MonoBehaviour
     private void AdvanceTo(StoryPhase newPhase)
     {
         Debug.Log($"Advancing story from {CurrentPhase} to {newPhase}");
+
+        if (newPhase == StoryPhase.Phase4)
+        {
+            Debug.Log("Unlocking door for Tom in Phase 4");
+            door.UnlockDoor();
+        }
+
         CurrentPhase = newPhase;
         collectedKeywords.Clear();
     }
 
     public string GetPhasePrompt(string NPCName)
     {
-
         string prompt = NPCManager.GetNPCBehaviour(NPCName, (int)CurrentPhase);
         return prompt ?? $"Unknown NPC: {NPCName}";
     }

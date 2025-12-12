@@ -11776,6 +11776,7 @@ MonoBehaviour:
   openAngle: 90
   openSpeed: 2
   interactKey: 101
+  isLocked: 0
 --- !u!1001 &1019154795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19576,7 +19577,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.85
+  m_fontSize: 23.3
   m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -22211,6 +22212,7 @@ MonoBehaviour:
   openAngle: 90
   openSpeed: 2
   interactKey: 101
+  isLocked: 1
 --- !u!1 &1988562570
 GameObject:
   m_ObjectHideFlags: 0
@@ -22400,6 +22402,7 @@ MonoBehaviour:
   openAngle: 90
   openSpeed: 2
   interactKey: 101
+  isLocked: 0
 --- !u!1001 &2007147712
 PrefabInstance:
   m_ObjectHideFlags: 0
