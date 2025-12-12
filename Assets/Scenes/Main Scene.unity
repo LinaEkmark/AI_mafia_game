@@ -1509,7 +1509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27100fab0797445dca640007c2fde604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 88984592}
   sceneAnimation: feelingTheMusic
 --- !u!1001 &91248814
 PrefabInstance:
@@ -2051,7 +2051,7 @@ Transform:
   m_GameObject: {fileID: 114396561}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.174, y: 1.659, z: 1.618}
+  m_LocalPosition: {x: -3.174, y: 0, z: 1.618}
   m_LocalScale: {x: 1.1238694, y: 2.0431466, z: 1.1238694}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9818,15 +9818,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4473230614090514973, guid: 0b1646c4bb46eb34c8cc03172f9d25c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0069658565
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4473230614090514973, guid: 0b1646c4bb46eb34c8cc03172f9d25c8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5129343
+      value: 0.26
       objectReference: {fileID: 0}
     - target: {fileID: 4473230614090514973, guid: 0b1646c4bb46eb34c8cc03172f9d25c8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.02496834
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4473230614090514973, guid: 0b1646c4bb46eb34c8cc03172f9d25c8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10463,7 +10463,7 @@ Transform:
   m_GameObject: {fileID: 826514348}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.055166587, y: -0.011257147, z: -0.0044489116}
+  m_LocalPosition: {x: 0.055166587, y: 0, z: -0.0044489116}
   m_LocalScale: {x: 2.4672894, y: 1.3571768, z: 2.4672894}
   m_ConstrainProportionsScale: 0
   m_Children: []
