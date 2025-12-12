@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class AnimationStateController : MonoBehaviour
 {
+    int isWalkingHash;
+
+    [Header("Components")]
     public Animator animator;
     public KinematicCharacterMotor motor;
+    public AudioSource audioSource;
 
-    int isWalkingHash;
+    [Header("Settings")]
+    public AudioClip[] footstepSounds;
+    //readonly string animParam_Walking = "walking";
+
+    //[Header("State")] 
+    //public bool walking = false;
 
     void Awake()
     {
@@ -16,6 +25,9 @@ public class AnimationStateController : MonoBehaviour
 
         if (!motor)
             motor = GetComponentInParent<KinematicCharacterMotor>();
+
+        if (!audioSource)
+            audioSource = GetComponentInParent<AudioSource>();
 
         isWalkingHash = Animator.StringToHash("isWalking");
     }
@@ -32,5 +44,12 @@ public class AnimationStateController : MonoBehaviour
         bool isWalking = vel.magnitude > 0.1f; // tweak threshold if needed
 
         animator.SetBool(isWalkingHash, isWalking);
+    }
+
+    public void Footstep()
+    {
+        int random = Random.Range(0, footstepSounds.Length);
+        var clip = footstepSounds[random];
+        audioSource.PlayOneShot(clip);
     }
 }
