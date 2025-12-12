@@ -17826,6 +17826,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6229916318629501704, guid: feadbf409fb2a494096c83f684cfac7e, type: 3}
+      propertyPath: NPCname
+      value: Tom
+      objectReference: {fileID: 0}
+    - target: {fileID: 6229916318629501704, guid: feadbf409fb2a494096c83f684cfac7e, type: 3}
+      propertyPath: chatPanel
+      value: 
+      objectReference: {fileID: 1842068819}
+    - target: {fileID: 6229916318629501704, guid: feadbf409fb2a494096c83f684cfac7e, type: 3}
+      propertyPath: inputField
+      value: 
+      objectReference: {fileID: 2005870319}
+    - target: {fileID: 6229916318629501704, guid: feadbf409fb2a494096c83f684cfac7e, type: 3}
+      propertyPath: scrollRect
+      value: 
+      objectReference: {fileID: 1669154721}
+    - target: {fileID: 6229916318629501704, guid: feadbf409fb2a494096c83f684cfac7e, type: 3}
+      propertyPath: sendButton
+      value: 
+      objectReference: {fileID: 174254183}
+    - target: {fileID: 6229916318629501704, guid: feadbf409fb2a494096c83f684cfac7e, type: 3}
+      propertyPath: contentPanel
+      value: 
+      objectReference: {fileID: 1103596852}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4125631938324781380, guid: feadbf409fb2a494096c83f684cfac7e, type: 3}
