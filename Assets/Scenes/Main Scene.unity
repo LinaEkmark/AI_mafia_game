@@ -198,7 +198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7211560564400032073, guid: fba5b93e44dc42f49b103ddb037e7fa4, type: 3}
       propertyPath: m_Name
-      value: door_a_variant (1)
+      value: door_investigation_room
       objectReference: {fileID: 0}
     - target: {fileID: 7796548100678494630, guid: fba5b93e44dc42f49b103ddb037e7fa4, type: 3}
       propertyPath: m_Convex
@@ -554,6 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentPhase: 0
+  door: {fileID: 1987565880}
 --- !u!4 &20233114
 Transform:
   m_ObjectHideFlags: 0
