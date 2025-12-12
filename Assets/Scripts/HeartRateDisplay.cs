@@ -32,7 +32,7 @@ public class HeartRateDisplay : MonoBehaviour
     [Tooltip("Latched state: once keyword triggers stress, remain stressed until manually reset.")]
     public bool stressedLatched = false;
 
-    float currentBpm;
+    public float currentBpm;
     Coroutine updateRoutine;
 
     void Awake()
@@ -153,6 +153,6 @@ public class HeartRateDisplay : MonoBehaviour
         if (heartRateText == null) return;
         // Round to integer BPM for display
         int bpmRounded = Mathf.RoundToInt(currentBpm);
-        heartRateText.text = $"Heartrate: {bpmRounded} bpm";
+        heartRateText.text = $"{bpmRounded} bpm";
     }
 }
