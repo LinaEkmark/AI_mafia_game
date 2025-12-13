@@ -19,16 +19,19 @@ public class KeyboardSound : MonoBehaviour
 
     public void Keyboard()
     {
-        typing = !typing;  // Toggle the bool
+        if (keyboardSound != null)
+        {
+            typing = !typing;  // Toggle the bool
 
-        if (typing)
-        {
-            audioSource.clip = keyboardSound;
-            audioSource.Play();
-        }
-        else
-        {
-            audioSource.Stop();
+            if (typing)
+            {
+                audioSource.clip = keyboardSound;
+                audioSource.Play();
+            }
+            else
+            {
+                audioSource.Stop();
+            }
         }
     }
 }
