@@ -1,12 +1,30 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadSceneButton : MonoBehaviour
 {
-    public Object sceneAsset;
+    // Set the scene name in Inspector
+    public string sceneName = "Main Scene";
+    public Button button;
+
+    void Start()
+    {
+        if (button != null)
+        {
+            button.onClick.AddListener(LoadScene);
+        }
+    }
 
     public void LoadScene()
     {
-        SceneManager.LoadScene(sceneAsset.name);
+        if (!string.IsNullOrEmpty(sceneName))
+        {
+            SceneManager.LoadScene(sceneName); // loads scene by name
+        }
+        else
+        {
+            Debug.LogError("Scene name not set in the Inspector!");
+        }
     }
 }

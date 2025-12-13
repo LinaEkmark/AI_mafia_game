@@ -513,19 +513,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 750628081}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1554451461}
-        m_TargetAssemblyTypeName: LoadSceneButton, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &750628081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -772,7 +760,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a8ea0a4a8b000459788f03bbc74562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneAsset: {fileID: 102900000, guid: 578728e0dd306bc42b9882fa04dd56df, type: 3}
+  sceneName: Main Scene
+  button: {fileID: 750628080}
 --- !u!1 &2131677267
 GameObject:
   m_ObjectHideFlags: 0
